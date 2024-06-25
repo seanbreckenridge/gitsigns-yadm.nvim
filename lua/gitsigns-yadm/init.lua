@@ -49,6 +49,10 @@ function M.yadm_signs(callback)
     vim.schedule(function()
         -- if buffer is not a file, don't do anything
         local file = vim.fn.expand("%:p")
+        -- if the file is not in your home directory, skip
+        if not vim.startswith(file, M.Config.homedir) then
+            return callback()
+        end
         if not vim.fn.filereadable(file) then
             return callback()
         end
