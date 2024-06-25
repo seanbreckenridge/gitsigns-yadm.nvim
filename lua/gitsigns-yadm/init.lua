@@ -3,56 +3,70 @@ local M = {}
 ---@class (exact) GitsignsYadm.Config
 ---@field homedir? string
 ---@field yadm_repo_git? string
-M.Config = {
+M.config = {
     homedir = nil,
     yadm_repo_git = nil,
 }
 
-local function resolve_config()
-    if M.Config.homedir == nil then
-        -- if default config has not been computed yet, compute it
-        local os = require("os")
-        local homedir = os.getenv("HOME")
-        if homedir ~= nil then
-            M.Config.homedir = homedir
+---@param opts? GitsignsYadm.Config
+local function resolve_config(opts)
+    local options = opts or {}
+    if M.config.homedir == nil then
+        if options.homedir ~= nil then
+            M.config.homedir = options.homedir
+        else
+            local os = require("os")
+            local homedir = os.getenv("HOME")
+            if homedir ~= nil then
+                M.config.homedir = homedir
+            end
         end
     end
 
-    if M.Config.yadm_repo_git == nil then
-        local pth = vim.fn.expand("~/.local/share/yadm/repo.git")
-        if (vim.uv or vim.loop).fs_stat(pth) then
-            M.Config.yadm_repo_git = pth
+    if M.config.yadm_repo_git == nil then
+        if options.yadm_repo_git then
+            M.config.yadm_repo_git = vim.fn.expand(options.yadm_repo_git)
+        else
+            local pth = vim.fn.expand("~/.local/share/yadm/repo.git")
+            if (vim.uv or vim.loop).fs_stat(pth) then
+                M.config.yadm_repo_git = pth
+            end
         end
     end
 end
 
---- gitsigns yadm support
----@param callback fun(cb_value: {toplevel: string, gitdir: string}?): nil
+--- checks if the buffer is tracked by yadm, and sets the
+--- correct toplevel and gitdir attributes if it is
+---@param callback fun(_: {toplevel: string, gitdir: string}?): nil
 ---@return nil
 function M.yadm_signs(callback)
-    resolve_config()
-    if M.Config.homedir == nil then
-        vim.notify(
-            'Could not determine $HOME, please set homedir in Config like:\nrequire("gitsigns-yadm").Config.homedir = "/home/your_name"',
-            vim.log.levels.WARN
-        )
-        return callback()
-    end
-    if M.Config.yadm_repo_git == nil then
-        vim.notify(
-            'Could not determine location of yadm repo, please set yadm_repo_git in Config like:\nrequire("gitsigns-yadm").Config.yadm_repo_git = "/home/your_name/.local/share/yadm/repo.git"',
-            vim.log.levels.WARN
-        )
-        return callback()
+    if M.config.homedir == nil or M.config.yadm_repo_git == nil then
+        -- in case user did not setup the plugin, try resolving to the default config values to see if that fixes it
+        resolve_config()
+
+        if M.config.homedir == nil then
+            vim.notify(
+                'Could not determine $HOME, pass your home directory to setup() like:\nrequire("gitsigns-yadm").setup({ homedir = "/home/your_name" })',
+                vim.log.levels.WARN
+            )
+            return callback()
+        end
+        if M.config.yadm_repo_git == nil then
+            vim.notify(
+                'Could not determine location of yadm repo, pass it to setup() like:\nrequire("gitsigns-yadm").setup({ yadm_repo_git = "~/path/to/repo.git" })',
+                vim.log.levels.WARN
+            )
+            return callback()
+        end
     end
 
     vim.schedule(function()
-        -- if buffer is not a file, don't do anything
         local file = vim.fn.expand("%:p")
         -- if the file is not in your home directory, skip
-        if not vim.startswith(file, M.Config.homedir) then
+        if not vim.startswith(file, M.config.homedir) then
             return callback()
         end
+        -- if buffer is not a file, don't do anything
         if not vim.fn.filereadable(file) then
             return callback()
         end
@@ -64,8 +78,8 @@ function M.yadm_signs(callback)
                 on_exit = vim.schedule_wrap(function(_, return_val)
                     if return_val == 0 then
                         return callback({
-                            toplevel = M.Config.homedir,
-                            gitdir = M.Config.yadm_repo_git,
+                            toplevel = M.config.homedir,
+                            gitdir = M.config.yadm_repo_git,
                         })
                     else
                         return callback()
@@ -74,6 +88,11 @@ function M.yadm_signs(callback)
             })
             :sync()
     end)
+end
+
+---@param opts? GitsignsYadm.Config
+function M.setup(opts)
+    resolve_config(opts)
 end
 
 return M
