@@ -1,4 +1,4 @@
-## gitsigns-yadm
+## gitsigns-yadm.nvim
 
 This uses `gitsigns` `_on_attach_pre` function hook to check if the currently attached buffer is file tracked by `yadm`, and if it is, sets the correct `toplevel` and `gitdir` attributes.
 
