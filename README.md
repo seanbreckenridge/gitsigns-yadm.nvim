@@ -76,3 +76,5 @@ _on_attach_pre = function(_, callback)
     end)
 end,
 ```
+
+and then check `:messages`.
