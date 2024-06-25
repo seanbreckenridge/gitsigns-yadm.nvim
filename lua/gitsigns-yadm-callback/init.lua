@@ -19,7 +19,10 @@ local function resolve_config()
     end
 
     if M.Config.yadm_repo_git == nil then
-        M.Config.yadm_repo_git = vim.fn.expand("~/.local/share/yadm/repo.git")
+        local pth = vim.fn.expand("~/.local/share/yadm/repo.git")
+        if (vim.uv or vim.loop).fs_stat(pth) then
+            M.Config.yadm_repo_git = pth
+        end
     end
 end
 
@@ -28,9 +31,16 @@ end
 ---@return nil
 function M.yadm_signs(callback)
     resolve_config()
-    if M.Config.homedir == nil or M.Config.yadm_repo_git == nil then
+    if M.Config.homedir == nil then
         vim.notify(
-            'Could not determine $HOME or yadm repo.git path, please pass a second argument to yadm_signs like { homedir = "/home/your_name", yadm_repo_git = vim.fn.expand("~/.path/to/yadm/repo.git") }',
+            'Could not determine $HOME, please set homedir in Config like:\nrequire("gitsigns-yadm-callback").Config.homedir = "/home/your_name"',
+            vim.log.levels.WARN
+        )
+        return callback()
+    end
+    if M.Config.yadm_repo_git == nil then
+        vim.notify(
+            'Could not determine location of yadm repo, please set yadm_repo_git in Config like:\nrequire("gitsigns-yadm-callback").Config.yadm_repo_git = "/home/your_name/.local/share/yadm/repo.git"',
             vim.log.levels.WARN
         )
         return callback()
