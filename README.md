@@ -11,7 +11,7 @@ return {
     "lewis6991/gitsigns.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "seanbreckenridge/gitsigns-yadm",
+        "seanbreckenridge/gitsigns-yadm.nvim",
     },
     opts = {
         ...,
