@@ -1,6 +1,6 @@
 local M = {}
 
----@class (exact) YadmCallback.Config
+---@class (exact) GitsignsYadm.Config
 ---@field homedir? string
 ---@field yadm_repo_git? string
 M.Config = {
@@ -33,14 +33,14 @@ function M.yadm_signs(callback)
     resolve_config()
     if M.Config.homedir == nil then
         vim.notify(
-            'Could not determine $HOME, please set homedir in Config like:\nrequire("gitsigns-yadm-callback").Config.homedir = "/home/your_name"',
+            'Could not determine $HOME, please set homedir in Config like:\nrequire("gitsigns-yadm").Config.homedir = "/home/your_name"',
             vim.log.levels.WARN
         )
         return callback()
     end
     if M.Config.yadm_repo_git == nil then
         vim.notify(
-            'Could not determine location of yadm repo, please set yadm_repo_git in Config like:\nrequire("gitsigns-yadm-callback").Config.yadm_repo_git = "/home/your_name/.local/share/yadm/repo.git"',
+            'Could not determine location of yadm repo, please set yadm_repo_git in Config like:\nrequire("gitsigns-yadm").Config.yadm_repo_git = "/home/your_name/.local/share/yadm/repo.git"',
             vim.log.levels.WARN
         )
         return callback()

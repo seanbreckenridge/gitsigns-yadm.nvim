@@ -1,4 +1,4 @@
-## gitsigns-yadm-callback
+## gitsigns-yadm
 
 This uses `gitsigns` `_on_attach_pre` function hook to check if the currently attached buffer is file tracked by `yadm`, and if it is, sets the correct `toplevel` and `gitdir` attributes.
 
@@ -11,12 +11,12 @@ return {
     "lewis6991/gitsigns.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "seanbreckenridge/gitsigns-yadm-callback",
+        "seanbreckenridge/gitsigns-yadm",
     },
     opts = {
         ...,
         _on_attach_pre = function(_, callback)
-            require("gitsigns-yadm-callback").yadm_signs(callback)
+            require("gitsigns-yadm").yadm_signs(callback)
         end,
         on_attach = function(bufnr)
         ...
@@ -27,7 +27,7 @@ return {
 You can modify the global `Config` table to configure:
 
 ```lua
-local yadm = require('gitsigns-yadm-callback')
+local yadm = require('gitsigns-yadm')
 yadm.Config.yadm_repo_git = vim.fn.expand("~/.local/somewhere/else/yadm/repo.git")
 ```
 
@@ -47,7 +47,7 @@ If things don't seem to be working, try scheduling the `yadm_signs` call so that
 ```lua
 _on_attach_pre = function(_, callback)
     vim.schedule(function()
-        require("gitsigns-yadm-callback").yadm_signs(callback)
+        require("gitsigns-yadm").yadm_signs(callback)
     end)
 end,
 ```
