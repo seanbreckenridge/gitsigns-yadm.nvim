@@ -4,7 +4,7 @@ This uses [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) `_on_attach_p
 
 ## Installation
 
-Add this to your `dependencies` for `gitsigns`, add a `_on_attach_pre` function to your configuration, passing the callback to the `yadm_signs` function:
+Using [`lazy.nvim`](https://github.com/folke/lazy.nvim); add this to your `dependencies` for `gitsigns`, add a `_on_attach_pre` function to your gitsigns configuration, passing the callback to the `yadm_signs` function:
 
 ```lua
 return {
@@ -51,22 +51,6 @@ return {
         },
     },
 
-```
-
-If using [`lazy`](https://github.com/folke/lazy.nvim), you can pass pass `opts`:
-
-```lua
-return {
-    "lewis6991/gitsigns.nvim",
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-        {
-            "seanbreckenridge/gitsigns-yadm.nvim",
-            opts = {
-                yadm_repo_git = "~/.config/yadm/repo.git"
-            },
-        },
-    },
 ```
 
 ## Troubleshooting

@@ -18,8 +18,9 @@ and `gitdir` attributes.
 
 INSTALLATION                                 *gitsigns-yadm.nvim-installation*
 
-Add this to your `dependencies` for `gitsigns`, add a `_on_attach_pre` function
-to your configuration, passing the callback to the `yadm_signs` function:
+Using `lazy.nvim` <https://github.com/folke/lazy.nvim>; add this to your
+`dependencies` for `gitsigns`, add a `_on_attach_pre` function to your gitsigns
+configuration, passing the callback to the `yadm_signs` function:
 
 >lua
     return {
@@ -69,26 +70,10 @@ You can pass those options to the `setup` function to configure:
         },
 <
 
-If using `lazy` <https://github.com/folke/lazy.nvim>, you can pass pass `opts`
-
->lua
-    return {
-        "lewis6991/gitsigns.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            {
-                "seanbreckenridge/gitsigns-yadm.nvim",
-                opts = {
-                    yadm_repo_git = "~/.config/yadm/repo.git"
-                },
-            },
-        },
-<
-
 
 TROUBLESHOOTING                           *gitsigns-yadm.nvim-troubleshooting*
 
-Ifthings don’t seem to be working, try scheduling the `yadm_signs` call so
+If things don’t seem to be working, try scheduling the `yadm_signs` call so
 that the `gitsigns` does not suppress the errors:
 
 >lua
