@@ -53,6 +53,18 @@ return {
 
 ```
 
+If you want to disable this when `yadm` is not installed, you can use `vim.fn.executable`:
+
+```lua
+_on_attach_pre = function(_, callback)
+    if vim.fn.executable("yadm") == 1 then
+        require("gitsigns-yadm").yadm_signs(callback)
+    else
+        callback()
+    end
+end,
+```
+
 ## Troubleshooting
 
 If things don't seem to be working, try scheduling the `yadm_signs` call so that the `gitsigns` does not suppress the errors:
