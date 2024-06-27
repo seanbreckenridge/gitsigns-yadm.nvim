@@ -21,6 +21,28 @@ return {
         on_attach = function(bufnr)
         ...
     }
+}
+```
+
+Since this doesn't require calling `setup`, in accordance with [`lazy`s best practices](https://lazy.folke.io/developers#best-practices) you could also do the following:
+
+```lua
+return {
+    {
+        "seanbreckenridge/gitsigns-yadm.nvim",
+        lazy = true,
+    },
+    {
+        "lewis6991/gitsigns.nvim",
+        opts = {
+            ...
+            _on_attach_pre = function(_, callback)
+                require("gitsigns-yadm").yadm_signs(callback)
+            end,
+            ...
+        }
+    }
+}
 ```
 
 ## Configuration
