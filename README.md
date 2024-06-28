@@ -1,6 +1,6 @@
 ## gitsigns-yadm.nvim
 
-This uses [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) `_on_attach_pre` function to check if the currently attached buffer is file tracked by [`yadm`](https://yadm.io/), highlighting the buffer properly if it is.
+This uses the [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) `_on_attach_pre` function to check if the currently attached buffer is file tracked by [`yadm`](https://yadm.io/), highlighting the buffer properly if it is.
 
 ## Installation
 
