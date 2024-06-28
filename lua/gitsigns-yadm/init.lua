@@ -71,11 +71,11 @@ function M.yadm_signs(callback)
         end
     end
 
-    -- note: without the schedule/schedule_wrap here, on some files it will block interaction
+    -- NOTE: without the schedule/schedule_wrap here, on some files it will block interaction
     -- and prevent the user from being able to do anything till this finishes
     -- if yadm runs particularly slow for some reason, we never want to block the UI
     --
-    -- ls-files is not processed by yadm in any way - it is passed directly on to git
+    -- NOTE: ls-files is not processed by yadm in any way - it is passed directly on to git
     -- but the user could possibly add yadm hooks which could hang
     -- which is why shell_timeout_ms is something the user can configure
     -- https://github.com/TheLocehiliosan/yadm/blob/0a5e7aa353621bd28a289a50c0f0d61462b18c76/yadm#L149-L153
@@ -89,6 +89,10 @@ function M.yadm_signs(callback)
         if not vim.fn.filereadable(file) then
             return callback()
         end
+        -- TODO: wrap :new in-case it errors?
+        -- it validates if the cmd is available with vim.fn.executable(),
+        -- if yadm is not available, it will print a long traceback
+        --
         -- use yadm ls-files to check if the file is tracked
         local task = require("plenary.job"):new({
             command = "yadm",
