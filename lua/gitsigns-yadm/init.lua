@@ -45,14 +45,14 @@ function M.yadm_signs(callback)
         resolve_config()
 
         if M.config.homedir == nil then
-            vim.notify(
+            vim.notify_once(
                 'Could not determine $HOME, pass your home directory to setup() like:\nrequire("gitsigns-yadm").setup({ homedir = "/home/your_name" })',
                 vim.log.levels.WARN
             )
             return callback()
         end
         if M.config.yadm_repo_git == nil then
-            vim.notify(
+            vim.notify_once(
                 'Could not determine location of yadm repo, pass it to setup() like:\nrequire("gitsigns-yadm").setup({ yadm_repo_git = "~/path/to/repo.git" })',
                 vim.log.levels.WARN
             )
