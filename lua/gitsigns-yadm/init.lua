@@ -35,6 +35,9 @@ local function resolve_config(opts)
     end
 end
 
+-- upstream logic for processing the callback value:
+-- https://github.com/lewis6991/gitsigns.nvim/blob/6b1a14eabcebbcca1b9e9163a26b2f8371364cb7/lua/gitsigns/attach.lua#L120-L137
+
 --- checks if the buffer is tracked by yadm, and sets the
 --- correct toplevel and gitdir attributes if it is
 ---@param callback fun(_: {toplevel: string, gitdir: string}?): nil
@@ -48,7 +51,7 @@ function M.yadm_signs(callback)
             vim.notify_once(
                 'Could not determine $HOME, pass your home directory to setup() like:\nrequire("gitsigns-yadm").setup({ homedir = "/home/your_name" })',
                 vim.log.levels.WARN,
-                { title = 'gitsigns-yadm.nvim' }
+                { title = "gitsigns-yadm.nvim" }
             )
             return callback()
         end
@@ -56,7 +59,7 @@ function M.yadm_signs(callback)
             vim.notify_once(
                 'Could not determine location of yadm repo, pass it to setup() like:\nrequire("gitsigns-yadm").setup({ yadm_repo_git = "~/path/to/repo.git" })',
                 vim.log.levels.WARN,
-                { title = 'gitsigns-yadm.nvim' }
+                { title = "gitsigns-yadm.nvim" }
             )
             return callback()
         end
