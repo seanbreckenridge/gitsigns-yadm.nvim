@@ -41,6 +41,19 @@ local function resolve_config(opts)
     end
 end
 
+-- NOTE: for posterity, the reason why I decided to only pass callback and not
+-- the bufnr and callback is that I think that obfuscates what the _on_attach_pre is doing.
+-- The vim.fn.executable() example in the README shows how to optionally
+-- use yadm_signs, which makes it more obvious what to do if you wanted run your own _on_attach_pre
+-- customization. (e.g. first check if a file belongs to some other bare-git repo, and if
+-- its not, only then import gitsigns-yadm.
+-- The other possible way this could've been configured is:
+-- _on_attach_pre = require("gitsigns-yadm").yadm_signs,
+-- and then yadm_signs just accepts both the bufnr and callback. That is 'cleaner', but
+-- it also means that gitsigns-yadm is always imported when the user configures this, not
+-- when _on_attach_pre is called. The way this is configured is more complicated, but it gives
+-- the user more control and perhaps understanding as to what is going on.
+
 -- upstream logic for processing the callback value:
 -- https://github.com/lewis6991/gitsigns.nvim/blob/6b1a14eabcebbcca1b9e9163a26b2f8371364cb7/lua/gitsigns/attach.lua#L120-L137
 

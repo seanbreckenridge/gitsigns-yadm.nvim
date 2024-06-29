@@ -4,7 +4,7 @@ This uses the [`gitsigns`](https://github.com/lewis6991/gitsigns.nvim) `_on_atta
 
 ## Installation
 
-Install the plugin with your plugin manager, and then add `_on_attach_pre` function to your [`gitsigns configuration`](https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file#installation--usage), passing the `callback` to the `yadm_signs` function:
+Install the plugin with your plugin manager, and then add a `_on_attach_pre` function to your [`gitsigns configuration`](https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file#installation--usage), passing the `callback` to the `yadm_signs` function:
 
 ```lua
 require('gitsigns').setup({
