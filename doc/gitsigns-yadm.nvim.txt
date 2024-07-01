@@ -1,4 +1,4 @@
-*gitsigns-yadm.nvim.txt*             For             Last change: 2024 June 28
+*gitsigns-yadm.nvim.txt*             For             Last change: 2024 July 01
 
 ==============================================================================
 Table of Contents                       *gitsigns-yadm.nvim-table-of-contents*
@@ -18,7 +18,7 @@ is.
 INSTALLATION                                 *gitsigns-yadm.nvim-installation*
 
 Install the plugin with your plugin manager, and then add a `_on_attach_pre`
-function to your `gitsigns configuration`
+function to your `gitsigns` configuration
 <https://github.com/lewis6991/gitsigns.nvim?tab=readme-ov-file#installation--usage>,
 passing the `callback` to the `yadm_signs` function:
 

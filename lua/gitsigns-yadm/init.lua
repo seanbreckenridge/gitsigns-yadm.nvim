@@ -45,8 +45,8 @@ end
 -- the bufnr and callback is that I think that obfuscates what the _on_attach_pre is doing.
 -- The vim.fn.executable() example in the README shows how to optionally
 -- use yadm_signs, which makes it more obvious what to do if you wanted run your own _on_attach_pre
--- customization. (e.g. first check if a file belongs to some other bare-git repo, and if
--- its not, only then import gitsigns-yadm.
+-- customization (e.g., first check if a file belongs to some other bare-git repo, and if
+-- its not, only then import gitsigns-yadm).
 -- The other possible way this could've been configured is:
 -- _on_attach_pre = require("gitsigns-yadm").yadm_signs,
 -- and then yadm_signs just accepts both the bufnr and callback. That is 'cleaner', but
