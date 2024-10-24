@@ -63,7 +63,7 @@ With [`lazy`](https://github.com/folke/lazy.nvim):
     dependencies = {
         "nvim-lua/plenary.nvim",
         {
-            "seanbreckenridge/gitsigns-yadm.nvim",
+            "purarue/gitsigns-yadm.nvim",
             opts = {
                 shell_timeout_ms = 1000,
             },
@@ -83,7 +83,7 @@ Since this doesn't require calling `setup` (unless you want to configure the def
 ```lua
 {
     {
-        "seanbreckenridge/gitsigns-yadm.nvim",
+        "purarue/gitsigns-yadm.nvim",
         lazy = true,
     },
     {
